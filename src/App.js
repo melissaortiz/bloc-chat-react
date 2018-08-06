@@ -18,6 +18,9 @@ class App extends Component {
   render() {
     return (
       <div className="app">
+        <header className="chatHeader">
+        Bloc Chat
+        </header>
         <RoomList firebase={firebase} />
       </div>
     );

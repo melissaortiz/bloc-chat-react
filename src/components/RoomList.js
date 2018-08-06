@@ -10,9 +10,9 @@ class RoomList extends React.Component {
 			this.roomsRef = this.props.firebase.database().ref('rooms');
 			this.state = {
 			rooms : []
+	}
 		};
 	
-	}
 
 	componentDidMount() {
 		this.roomsRef.on('child_added', snapshot => {
@@ -20,6 +20,7 @@ class RoomList extends React.Component {
 			room.key = snapshot.key;
 			this.setState({ rooms: this.state.rooms.concat( room ) });
 		});
+		
 	}
 
 
@@ -30,9 +31,9 @@ class RoomList extends React.Component {
 		return (
 			<section className ="chat-room-list">
 			{this.state.rooms.map( (rooms, index) =>
-				<ul className="rooms" key={index}>
-					<li className="room-list"></li>
-				</ul>
+				<div className="rooms" key={index}>
+					<li className="room-list">{rooms.name}</li>
+				</div>
 				)}
 			</section>
 
