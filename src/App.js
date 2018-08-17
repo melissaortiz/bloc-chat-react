@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import * as firebase from 'firebase';
-import RoomList from './components/RoomList'
+import RoomList from './components/RoomList';
+import MessageList from './components/MessageList';
 
 var config = {
     apiKey: "AIzaSyDO9f6R7JfPvdLHhVlA9B9B174390nryTI",
@@ -15,13 +15,24 @@ var config = {
   firebase.initializeApp(config);
 
 class App extends Component {
+  constructor(props){
+    super(props);
+      this.state = { 
+        activeRoom: {} 
+    };
+  }
+
+  handleRoomClick = (room) => {
+    this.setState({ activeRoom: room });
+  }
   render() {
     return (
       <div className="app">
         <header className="chatHeader">
         Bloc Chat
         </header>
-        <RoomList firebase={firebase} />
+        <RoomList firebase={firebase} activeRoom={this.state.activeRoom} handleRoomclick={this.handleRoomClick} />
+        <MessageList firebase={firebase} activeRoom={this.state.activeRoom} />
       </div>
     );
   }
