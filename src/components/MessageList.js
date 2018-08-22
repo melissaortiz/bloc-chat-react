@@ -6,7 +6,7 @@ class MessageList extends Component{
 		super(props);
 		this.state = {
 			messages : [],
-		};
+		}
 		this.messagesRef = this.props.firebase.database().ref('messages');
 	}
 
@@ -23,12 +23,14 @@ class MessageList extends Component{
 
 
 	render() {
+		const listMessages =  this.state.messages.filter( message => message.roomId === this.props.activeRoom.key)
 		return(
 			<section className="message-list">
-			{this.state.messages.map((message, index) =>
+			
+			{listMessages.map((message, index) =>
 				<div className="messages" key={index}>
-					<li>{message.username}</li>
-					<li>{message.content}</li>
+					<li>{message.roomId}</li>
+					
 				</div>
 				)}
 			</section>

@@ -7,11 +7,13 @@ import React, { Component } from 'react';
 class RoomList extends Component {
 	constructor(props) {
 			super(props);
+			this.handleRoomClick = this.handleRoomClick.bind(this);
 			this.roomsRef = this.props.firebase.database().ref('rooms');
 			this.state = {
 			rooms : [],
-			
+			activeRoom: '',
 	}
+
 		};
 	
 
@@ -47,14 +49,20 @@ class RoomList extends Component {
 		this.setState({ newRoomName: e.target.value})
 	}
 
+	handleRoomClick(){
+		console.log('click happened');
+	}
+
+
+
 
 
 	render() {
 		return (
 			<section className ="chat-room-list">
-			{this.state.rooms.map( (rooms, index) =>
-				<div className="rooms" key={index}>
-					<li className="room-list">{rooms.name}</li>
+			{this.state.rooms.map( (room, index) =>
+				<div className="rooms" key={index} onClick={() => this.props.handleRoomClick(room)} >
+					<li className="room-list">{room.name}</li>
 				</div>
 				)}
 			<div id="create-room">
