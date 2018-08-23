@@ -22,7 +22,8 @@ class App extends Component {
     };
   }
 
-  handleRoomClick (room){
+  handleRoomClick(room) {
+    console.log(room );
     this.setState({ activeRoom: room });
   }
   render() {
@@ -31,8 +32,8 @@ class App extends Component {
         <header className="chatHeader">
         Bloc Chat
         </header>
-        <RoomList firebase={firebase} activeRoom={this.state.activeRoom} handleRoomclick={this.handleRoomClick} />
-        <MessageList firebase={firebase} activeRoom={this.state.activeRoom} handleRoomclick={this.handleRoomClick}/>
+        <RoomList firebase={firebase} activeRoom={this.state.activeRoom} handleRoomClick={this.handleRoomClick.bind(this)} />
+        <MessageList firebase={firebase} activeRoom={this.state.activeRoom} handleRoomclick={this.handleRoomClick.bind(this)}/>
       </div>
     );
   }
