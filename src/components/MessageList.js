@@ -25,7 +25,7 @@ class MessageList extends Component{
 
 
 	render() {
-			console.log(this.props.activeRoom);
+			
 							
 
 		return(
