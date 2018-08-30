@@ -40,7 +40,7 @@ class App extends Component {
         <header className="chatHeader">
         Bloc Chat
         </header>
-        <User firebase={firebase} activeUser={this.state.activeUser} setUser={this.state.setUser} />
+        <User firebase={firebase} activeUser={this.state.activeUser} setUser={this.setUser.bind(this)} />
         <RoomList firebase={firebase} activeRoom={this.state.activeRoom} handleRoomClick={this.handleRoomClick.bind(this)} />
         <MessageList firebase={firebase} activeRoom={this.state.activeRoom} />
       </div>
