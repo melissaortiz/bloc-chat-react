@@ -11,6 +11,27 @@ class MessageList extends Component{
 		this.messagesRef = this.props.firebase.database().ref('messages');
 	}
 
+	createMessage(message){
+		const messages = this.state.newMessage
+		this.messagesRef.push({
+			message: message
+		})
+	}
+
+
+	onSubmit(e) {
+		e.preventDefault();
+		if (!this.state.newMessage){
+			return
+		}
+		this.createMessage(this.state.newMessage);
+		this.setState({ newMessage: ''});
+	}
+
+	handleChange(e){
+		this.setState({ newMessage: e.target.value})
+	}
+
 
 	componentDidMount() {
 		this.messagesRef.on('child_added', snapshot => {
@@ -33,10 +54,23 @@ class MessageList extends Component{
 			<h2>{this.props.activeRoom.name}</h2>
 			<ul>
 			{this.state.messages.filter( (message) => message.roomId === this.props.activeRoom.key).map((message, index) =>(
-					<li key={index}>{message.content}</li>)
+					<li key={index}>{message.username}:{message.content}</li>)
 				
 				)}
 			</ul>
+			<div id="create-message">
+				<form onSubmit= {(e) => {this.createMessage(e)} }>
+				
+				<input type="text" 
+				placeholder="Your message"
+				value={this.state.newMessage}
+				onChange={ (e) => this.handleChange(e) }
+				/>
+				
+				<input type="submit"
+				value="send" />
+				</form>
+			</div>
 			</section>
 
 			)
