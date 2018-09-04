@@ -12,23 +12,28 @@ class MessageList extends Component{
 		this.messagesRef = this.props.firebase.database().ref('messages');
 	}
 
-	createMessage(message){
+	createMessage(e, message){
+		e.preventDefault();
+		if (!this.state.newMessage){
+			return
+		}
 		const messages = this.state.newMessage
 		this.messagesRef.push({
 			content: message,
+			username: this.props.activeUser ? this.props.activeUser.displayName : " Guest",
 			roomId: this.props.activeRoom.key
 		})
 	}
 
 
-	onSubmit(e) {
-		e.preventDefault();
-		if (!this.state.newMessage){
-			return
-		}
-		this.createMessage(this.state.newMessage);
-		this.setState({ newMessage: ''});
-	}
+	//onSubmit(e) {
+	//	e.preventDefault();
+	//	if (!this.state.newMessage){
+	//		return
+	//	}
+	//	this.createMessage(this.state.newMessage);
+	//	this.setState({ newMessage: ''});
+	//}
 
 	handleChange(e){
 		this.setState({ newMessage: e.target.value})
@@ -61,7 +66,7 @@ class MessageList extends Component{
 				)}
 			</ul>
 			<div id="create-message">
-				<form onSubmit= {(e) => {this.createMessage(this.state.newMessage)}} >
+				<form onSubmit= {(e) => {this.createMessage(e, this.state.newMessage)}} >
 				
 				<input type="text" 
 				placeholder="Your message"
