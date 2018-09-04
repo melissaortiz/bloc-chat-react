@@ -7,6 +7,7 @@ class MessageList extends Component{
 		super(props);
 		this.state = {
 			messages : [],
+			newMessage: ""
 		}
 		this.messagesRef = this.props.firebase.database().ref('messages');
 	}
@@ -14,7 +15,8 @@ class MessageList extends Component{
 	createMessage(message){
 		const messages = this.state.newMessage
 		this.messagesRef.push({
-			message: message
+			content: message,
+			roomId: this.props.activeRoom.key
 		})
 	}
 
@@ -52,14 +54,14 @@ class MessageList extends Component{
 		return(
 			<section className="message-list">
 			<h2>{this.props.activeRoom.name}</h2>
-			<ul>
+			<ul className="messages">
 			{this.state.messages.filter( (message) => message.roomId === this.props.activeRoom.key).map((message, index) =>(
-					<li key={index}>{message.username}:{message.content}</li>)
+					<li key={index}>{message.username} {message.content}</li>)
 				
 				)}
 			</ul>
 			<div id="create-message">
-				<form onSubmit= {(e) => {this.createMessage(e)} }>
+				<form onSubmit= {(e) => {this.createMessage(this.state.newMessage)}} >
 				
 				<input type="text" 
 				placeholder="Your message"
