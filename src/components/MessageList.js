@@ -21,23 +21,26 @@ class MessageList extends Component{
 		this.messagesRef.push({
 			content: message,
 			username: this.props.activeUser ? this.props.activeUser.displayName : " Guest",
+			sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
 			roomId: this.props.activeRoom.key
 		})
 	}
 
-
-	//onSubmit(e) {
-	//	e.preventDefault();
-	//	if (!this.state.newMessage){
-	//		return
-	//	}
-	//	this.createMessage(this.state.newMessage);
-	//	this.setState({ newMessage: ''});
-	//}
-
 	handleChange(e){
 		this.setState({ newMessage: e.target.value})
 	}
+
+	formatTime(time) {
+  console.log(time);
+  var date = new Date(time);
+  var minutes = date.getMinutes();
+  if(minutes < 10) {
+    minutes = '0' + minutes;
+  }
+  if( this.hours >12 )
+  { this.hours = this.hours - 12; }
+  return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear() + " " + (date.getHours() % 12)+ ":" + minutes;
+}
 
 
 	componentDidMount() {
@@ -61,7 +64,7 @@ class MessageList extends Component{
 			<h2>{this.props.activeRoom.name}</h2>
 			<ul className="messages">
 			{this.state.messages.filter( (message) => message.roomId === this.props.activeRoom.key).map((message, index) =>(
-					<li key={index}>{message.username} {message.content}</li>)
+					<li key={index}><b>{message.username}</b> {this.formatTime(message.sentAt)} {message.content}</li>)
 				
 				)}
 			</ul>
