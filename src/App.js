@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
 import User from './components/User.js';
+import Contact from './components/Contact.js';
 
 var config = {
     apiKey: "AIzaSyDO9f6R7JfPvdLHhVlA9B9B174390nryTI",
